@@ -1,11 +1,12 @@
 package sample.ui;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import sample.logic.DivisorCounter;
 import sample.logic.Result;
 
-public class Controller {
+public class Controller extends Task<Result> {
 
     @FXML
     private Button startButton;
@@ -51,13 +52,18 @@ public class Controller {
         stopButton.setDisable(false);
         resultLabel.setText("");
 
-        DivisorCounter counter = new DivisorCounter();
+        DivisorCounter counter = new DivisorCounter(minimum, maximum);
         Result result = counter.calculate(minimum, maximum);
         resultLabel.setText("The number " + result.getNumber() + " has " + result.getDivisorCounter() + " divisors!");
 
         progressBar.setProgress(1);
         startButton.setDisable(false);
         stopButton.setDisable(true);
+    }
+
+    @Override
+    protected Result call() throws Exception {
+        return null;
     }
 }
 
